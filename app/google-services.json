@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "455243079530",
+    "project_id": "androidchatapp-e048e",
+    "storage_bucket": "androidchatapp-e048e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455243079530:android:5bd09eed00f093f5facf13",
+        "android_client_info": {
+          "package_name": "vdhuy.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455243079530-q2ol6i6k6qbji7lg5278c6k75ncsrrs7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCdg5vsHDE6Q66be4T78386MN75sjw8k8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455243079530-q2ol6i6k6qbji7lg5278c6k75ncsrrs7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
