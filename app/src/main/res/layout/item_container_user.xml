@@ -49,6 +49,5 @@
         android:textSize="@dimen/_10ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageProfile"
-        app:layout_constraintTop_toBottomOf="@id/viewSupporter"
-        />
+        app:layout_constraintTop_toBottomOf="@id/viewSupporter"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

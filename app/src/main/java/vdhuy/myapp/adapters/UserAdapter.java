@@ -14,10 +14,10 @@ import java.util.List;
 import vdhuy.myapp.databinding.ItemContainerUserBinding;
 import vdhuy.myapp.models.User;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>{
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private final List<User> users;
 
-    public UserAdapter(List<User> users){
+    public UserAdapter(List<User> users) {
         this.users = users;
     }
 
@@ -42,23 +42,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return users.size();
     }
 
-    class UserViewHolder extends RecyclerView.ViewHolder{
+    class UserViewHolder extends RecyclerView.ViewHolder {
         ItemContainerUserBinding binding;
 
-        UserViewHolder(ItemContainerUserBinding itemContainerUserBinding){
+        UserViewHolder(ItemContainerUserBinding itemContainerUserBinding) {
             super(itemContainerUserBinding.getRoot());
-            binding =itemContainerUserBinding;
+            binding = itemContainerUserBinding;
         }
 
-        void setUserData(User user){
+        void setUserData(User user) {
             binding.textName.setText(user.name);
             binding.textEmail.setText(user.email);
             binding.imageProfile.setImageBitmap(getUserImage(user.image));
         }
     }
 
-    private Bitmap getUserImage(String encodedImage){
+    private Bitmap getUserImage(String encodedImage) {
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0,bytes.length);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }
