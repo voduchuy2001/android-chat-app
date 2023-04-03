@@ -11,12 +11,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -35,16 +37,16 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding =  ActivitySignUpBinding.inflate(getLayoutInflater());
+        binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
         setListeners();
     }
 
-    protected void setListeners(){
+    protected void setListeners() {
         binding.textSignIn.setOnClickListener(v -> onBackPressed());
         binding.buttonSignUp.setOnClickListener(v -> {
-            if (isValidSignUp()){
+            if (isValidSignUp()) {
                 signUp();
             }
         });
@@ -56,11 +58,11 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void showToast(String message){
+    public void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void signUp(){
+    private void signUp() {
         loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> users = new HashMap<>();
@@ -88,44 +90,44 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 
-    private Boolean isValidSignUp(){
-        if (encodeImage == null){
+    private Boolean isValidSignUp() {
+        if (encodeImage == null) {
             showToast("Pls, Select an avt!");
             return false;
-        }else if (binding.inputName.getText().toString().trim().isEmpty()){
+        } else if (binding.inputName.getText().toString().trim().isEmpty()) {
             showToast("Pls, Enter your name!");
             return false;
-        }else if (binding.inputEmail.getText().toString().trim().isEmpty()){
+        } else if (binding.inputEmail.getText().toString().trim().isEmpty()) {
             showToast("Pls, Enter your email!");
             return false;
-        }else if (!Patterns.EMAIL_ADDRESS.matcher(binding.inputEmail.getText().toString()).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.inputEmail.getText().toString()).matches()) {
             showToast("Pls, Wrong type email!");
             return false;
-        }else if (binding.inputPassword.getText().toString().trim().isEmpty()){
+        } else if (binding.inputPassword.getText().toString().trim().isEmpty()) {
             showToast("Pls, Enter password!");
             return false;
-        }else if (binding.inputConfirmPassword.getText().toString().trim().isEmpty()){
+        } else if (binding.inputConfirmPassword.getText().toString().trim().isEmpty()) {
             showToast("Pls, Enter confirm password!");
             return false;
-        }else if (!binding.inputPassword.getText().toString().equals(binding.inputConfirmPassword.getText().toString())){
+        } else if (!binding.inputPassword.getText().toString().equals(binding.inputConfirmPassword.getText().toString())) {
             showToast("Password does not match!");
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    private void loading(Boolean isLoading){
-        if (isLoading){
+    private void loading(Boolean isLoading) {
+        if (isLoading) {
             binding.buttonSignUp.setVisibility(View.INVISIBLE);
             binding.progressBar.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             binding.progressBar.setVisibility(View.INVISIBLE);
             binding.buttonSignUp.setVisibility(View.VISIBLE);
         }
     }
 
-    private String encodeImage(Bitmap bitmap){
+    private String encodeImage(Bitmap bitmap) {
         int previewWith = 150;
         int previewHeight = bitmap.getHeight() * previewWith / bitmap.getWidth();
         Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWith, previewHeight, false);
@@ -138,8 +140,8 @@ public class SignUpActivity extends AppCompatActivity {
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if (result.getResultCode() == RESULT_OK){
-                    if (result.getData() != null){
+                if (result.getResultCode() == RESULT_OK) {
+                    if (result.getData() != null) {
                         Uri imageUri = result.getData().getData();
                         try {
                             InputStream inputStream = getContentResolver().openInputStream(imageUri);
@@ -147,7 +149,7 @@ public class SignUpActivity extends AppCompatActivity {
                             binding.imageProfile.setImageBitmap(bitmap);
                             binding.textAddImage.setVisibility(View.GONE);
                             encodeImage = encodeImage(bitmap);
-                        }catch (FileNotFoundException e){
+                        } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
                     }
