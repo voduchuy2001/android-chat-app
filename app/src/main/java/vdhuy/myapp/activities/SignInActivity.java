@@ -66,7 +66,7 @@ public class SignInActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         loading(false);
-                        showToast("Login fail, pls try again");
+                        showToast("Invalid login information, pls try again");
                     }
                 });
     }
