@@ -2,6 +2,7 @@ package vdhuy.myapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -13,11 +14,12 @@ import java.util.List;
 
 import vdhuy.myapp.adapters.UserAdapter;
 import vdhuy.myapp.databinding.ActivityUserBinding;
+import vdhuy.myapp.listeners.UserListener;
 import vdhuy.myapp.models.User;
 import vdhuy.myapp.utils.Constants;
 import vdhuy.myapp.utils.PreferenceManager;
 
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity implements UserListener {
     private ActivityUserBinding binding;
     private PreferenceManager preferenceManager;
 
@@ -57,7 +59,7 @@ public class UserActivity extends AppCompatActivity {
                             users.add(user);
                         }
                         if (users.size() > 0) {
-                            UserAdapter userAdapter = new UserAdapter(users);
+                            UserAdapter userAdapter = new UserAdapter(users, this);
                             binding.usersRecyclerView.setAdapter(userAdapter);
                             binding.usersRecyclerView.setVisibility(View.VISIBLE);
                         } else {
@@ -80,5 +82,13 @@ public class UserActivity extends AppCompatActivity {
         } else {
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onUserClicked(User user) {
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
+        finish();
     }
 }
