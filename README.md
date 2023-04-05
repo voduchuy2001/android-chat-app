@@ -20,6 +20,10 @@ The app allows users to communicate with each other through text messages
  
 ![6. Conversations List Page](https://res.cloudinary.com/dpzlmsevz/image/upload/v1680709151/conversations_bubeaw.jpg)
 
+![7. User Availability](https://res.cloudinary.com/dpzlmsevz/image/upload/v1680711694/avalability1_dwworc.jpg)
+
+![8. User Availability](https://res.cloudinary.com/dpzlmsevz/image/upload/v1680711694/avalability2_gloe6p.jpg)
+
 ## Technologies used
 
 - Java
