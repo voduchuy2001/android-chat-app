@@ -1,7 +1,5 @@
 package vdhuy.myapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,11 +23,13 @@ import java.util.List;
 
 import vdhuy.myapp.adapters.RecentConversionAdapter;
 import vdhuy.myapp.databinding.ActivityMainBinding;
+import vdhuy.myapp.listeners.ConversionListener;
 import vdhuy.myapp.models.ChatMessage;
+import vdhuy.myapp.models.User;
 import vdhuy.myapp.utils.Constants;
 import vdhuy.myapp.utils.PreferenceManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity implements ConversionListener {
     private ActivityMainBinding binding;
     private PreferenceManager preferenceManager;
     private List<ChatMessage> conversations;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         conversations = new ArrayList<>();
-        conversionAdapter = new RecentConversionAdapter(conversations);
+        conversionAdapter = new RecentConversionAdapter(conversations, this);
         binding.conversionRecyclerView.setAdapter(conversionAdapter);
         database = FirebaseFirestore.getInstance();
     }
@@ -160,5 +160,12 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     showToast("Unable to sign out!");
                 });
+    }
+
+    @Override
+    public void onConversionClicked(User user) {
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
     }
 }

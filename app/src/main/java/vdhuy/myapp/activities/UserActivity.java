@@ -1,7 +1,5 @@
 package vdhuy.myapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +17,7 @@ import vdhuy.myapp.models.User;
 import vdhuy.myapp.utils.Constants;
 import vdhuy.myapp.utils.PreferenceManager;
 
-public class UserActivity extends AppCompatActivity implements UserListener {
+public class UserActivity extends BaseActivity implements UserListener {
     private ActivityUserBinding binding;
     private PreferenceManager preferenceManager;
 

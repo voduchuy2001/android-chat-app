@@ -12,13 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import vdhuy.myapp.databinding.ItemContainerRecentConversionBinding;
+import vdhuy.myapp.listeners.ConversionListener;
 import vdhuy.myapp.models.ChatMessage;
+import vdhuy.myapp.models.User;
 
 public class RecentConversionAdapter extends RecyclerView.Adapter<RecentConversionAdapter.ConversionViewHolder> {
     private final List<ChatMessage> chatMessages;
+    private final ConversionListener conversionListener;
 
-    public RecentConversionAdapter(List<ChatMessage> chatMessages) {
+    public RecentConversionAdapter(List<ChatMessage> chatMessages, ConversionListener conversionListener) {
         this.chatMessages = chatMessages;
+        this.conversionListener = conversionListener;
     }
 
     @NonNull
@@ -55,6 +59,13 @@ public class RecentConversionAdapter extends RecyclerView.Adapter<RecentConversi
             binding.imageProfile.setImageBitmap(getConversionImage(chatMessage.conversionImage));
             binding.textName.setText(chatMessage.conversionName);
             binding.textRecentMessage.setText(chatMessage.message);
+            binding.getRoot().setOnClickListener(v -> {
+                User user = new User();
+                user.id = chatMessage.conversionId;
+                user.name = chatMessage.conversionName;
+                user.image = chatMessage.conversionImage;
+                conversionListener.onConversionClicked(user);
+            });
         }
     }
 
