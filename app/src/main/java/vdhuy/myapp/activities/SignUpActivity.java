@@ -104,6 +104,9 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (binding.inputPassword.getText().toString().trim().isEmpty()) {
             showToast("Pls, Enter password!");
             return false;
+        } else if (binding.inputPassword.getText().toString().trim().length() < 6) {
+            showToast("Password must be at least 6 characters!");
+            return false;
         } else if (binding.inputConfirmPassword.getText().toString().trim().isEmpty()) {
             showToast("Pls, Enter confirm password!");
             return false;
