@@ -131,7 +131,7 @@ public class ChatActivity extends AppCompatActivity {
             binding.chatRecyclerView.setVisibility(View.VISIBLE);
         }
         binding.progressBar.setVisibility(View.GONE);
-        if (conversionId != null) {
+        if (conversionId == null) {
             checkForConversion();
         }
     };
