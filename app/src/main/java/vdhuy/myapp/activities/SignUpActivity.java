@@ -17,12 +17,14 @@ import android.widget.Toast;
 
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import vdhuy.myapp.databinding.ActivitySignUpBinding;
 import vdhuy.myapp.utils.Constants;
 import vdhuy.myapp.utils.PreferenceManager;
@@ -62,11 +64,12 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void signUp() {
         loading(true);
+        String password = BCrypt.withDefaults().hashToString(12, binding.inputPassword.getText().toString().toCharArray());
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> users = new HashMap<>();
         users.put(Constants.KEY_NAME, binding.inputName.getText().toString());
         users.put(Constants.KEY_EMAIL, binding.inputEmail.getText().toString());
-        users.put(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString());
+        users.put(Constants.KEY_PASSWORD, password);
         users.put(Constants.KEY_IMAGE, encodeImage);
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .add(users)
@@ -114,7 +117,23 @@ public class SignUpActivity extends AppCompatActivity {
             showToast("Password does not match!");
             return false;
         } else {
-            return true;
+            FirebaseFirestore database = FirebaseFirestore.getInstance();
+            Query emailQuery = database.collection(Constants.KEY_COLLECTION_USERS)
+                    .whereEqualTo(Constants.KEY_EMAIL, binding.inputEmail.getText().toString());
+
+            emailQuery.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    if (task.getResult() != null && !task.getResult().isEmpty()) {
+                        showToast("Email already exists. Please use a different email.");
+                    } else {
+                        signUp();
+                    }
+                } else {
+                    showToast("Validation failed. Please try again.");
+                }
+            });
+
+            return false;
         }
     }
 

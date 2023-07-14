@@ -59,4 +59,7 @@ dependencies {
 
     // Firebase auth
     implementation 'com.google.firebase:firebase-auth'
+
+    // Bcrypt
+    implementation group: 'at.favre.lib', name: 'bcrypt', version: '0.10.2'
 }

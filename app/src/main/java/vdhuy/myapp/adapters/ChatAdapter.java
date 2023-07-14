@@ -14,7 +14,6 @@ import vdhuy.myapp.databinding.ItemContainerSentMessageBinding;
 import vdhuy.myapp.models.ChatMessage;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private final List<ChatMessage> chatMessages;
     private final Bitmap receiverProfileImage;
     private final String senderId;
